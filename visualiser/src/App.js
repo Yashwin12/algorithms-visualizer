@@ -1,6 +1,5 @@
 import React from 'react';
-import '../src/css/App.css';
-import LinearSearch from '../src/sortingVisualiser/LinearSearch'
+import LinearSearch from '../src/searchingVisualiser/LinearSearch'
 
 function App() {
   return (
