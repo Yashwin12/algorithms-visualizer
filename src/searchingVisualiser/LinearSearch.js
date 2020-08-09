@@ -66,7 +66,7 @@ class LinearSearch extends Component {
                     prevBoxes[idx].classList.add("highlight");
 
                     numberFoundAt = idx;
-                }, idx * myConstClass.ANIMATION_SPEED_SECONDS * 1000);
+                }, idx * myConstClass.LINEAR_ANIMATION_SPEED_SECONDS * 1000);
                 
                 break;                
             }
@@ -76,7 +76,7 @@ class LinearSearch extends Component {
                     prevBoxes[idx].classList.add("grow-find");
                     // prevBoxes[idx].classList.add("highlight");
 
-                }, idx * myConstClass.ANIMATION_SPEED_SECONDS * 1000);
+                }, idx * myConstClass.LINEAR_ANIMATION_SPEED_SECONDS * 1000);
             }
         }
 

@@ -60,7 +60,7 @@ class BinarySearch extends Component {
 
         let left = 0; 
         let right = this.state.array.length - 1;
-        var count = 0;
+        let count = 0;
 
         this.hightlightWithinBounds(left, right, prevBoxes);
 
@@ -79,7 +79,7 @@ class BinarySearch extends Component {
                     prevBoxes[middle].classList.add("highlight");
 
                     numberFoundAt = middle;
-                }, ( count + 1 ) * myConstClass.ANIMATION_SPEED_SECONDS * 1000);                
+                }, ( count + 1 ) * myConstClass.BINARY_ANIMATION_SPEED_SECONDS * 1000);                
                 break;            
             }         
             else if ( this.state.array[middle] > userInput ) {
@@ -92,12 +92,12 @@ class BinarySearch extends Component {
             setTimeout(() => {             
                 this.resetAllTiles(prevBoxes);
                 this.hightlightWithinBounds(left, right, prevBoxes);
-            }, count * 1000 * myConstClass.ANIMATION_SPEED_SECONDS );
+            }, count * 1000 * myConstClass.BINARY_ANIMATION_SPEED_SECONDS );
         }
 
         setTimeout(() => {
             this.setState({ buttonDisabled: false });
-        }, count * 1000 * myConstClass.ANIMATION_SPEED_SECONDS);
+        }, count * 1000 * myConstClass.BINARY_ANIMATION_SPEED_SECONDS);
 
     } //end of binarySearchOnClick() method
 
