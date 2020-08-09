@@ -3,7 +3,7 @@ import Header from '../commonUtils/Header';
 import Boxes from '../commonUtils/Boxes';
 import * as myConstClass from '../commonUtils/Constants';
 
-class LinearSearch extends Component {
+class BinarySearch extends Component {
     constructor(props) {
         super(props);
         this.state = { 
@@ -14,7 +14,7 @@ class LinearSearch extends Component {
          };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.resetArray();
     }
 
@@ -23,7 +23,7 @@ class LinearSearch extends Component {
         let randomArray = [];
         const prevBoxes = document.getElementsByClassName("outer-box"); 
         
-        document.getElementById("userInput").value = "";
+        document.getElementById("userInputBinary").value = "";
 
         for ( let i = 0; i < prevBoxes.length; i++ ){
             prevBoxes[i].style.backgroundColor = myConstClass.DEFAULT_BOX_COLOR;
@@ -33,6 +33,10 @@ class LinearSearch extends Component {
         for ( let i = 0; i < myConstClass.TOTAL_ARRAY_SIZE; i++ ){                        
             randomArray.push( this.randomNumber( myConstClass.STARTING_ARRAY_RANGE, myConstClass.ENDING_ARRAY_RANGE ) );
         }
+        randomArray.sort( (a,b) =>{
+            return a - b; 
+        });
+        
         this.setState( { array : randomArray } ); 
     }
 
@@ -41,8 +45,8 @@ class LinearSearch extends Component {
         return Math.floor(Math.random() * (max - min) + min); 
     }
     
-    linearSearchOnClick(){
-        let userInput = document.getElementById("userInput").value;
+    binarySearchOnClick(){
+        let userInput = document.getElementById("userInputBinary").value;
         
         if( !userInput )
             return;
@@ -54,33 +58,61 @@ class LinearSearch extends Component {
         
         const prevBoxes = document.getElementsByClassName("outer-box");
 
-        for( let idx = 0; idx < this.state.array.length; idx++ ) {
-            
-            if( this.state.array[idx] == userInput ){
-                
-                message = "Found number at " + idx;
+        let left = 0; 
+        let right = this.state.array.length - 1;
+        var count = 0;
 
+        this.hightlightWithinBounds(left, right, prevBoxes);
+
+        while ( left < right ){
+            let middle = Math.round( left + (right - left)/2 ); // This is preferred over let middle = (left + right) / 2;
+            // console.table( { left, right, middle} );
+            count++;
+
+            if( this.state.array[middle] == userInput ){                
+                message = "Found number at " + middle;
                 setTimeout(() => {
-                    prevBoxes[idx].style.backgroundColor = myConstClass.NUMBER_FOUND_BOX_COLOR;
-                    prevBoxes[idx].classList.add("grow-find");
-                    prevBoxes[idx].classList.add("highlight");
+                    this.resetAllTiles(prevBoxes);
 
-                    numberFoundAt = idx;
-                }, idx * myConstClass.ANIMATION_SPEED_SECONDS * 1000);
-                
-                break;                
-            }
-            else{
-                setTimeout(() => {
-                    prevBoxes[idx].style.backgroundColor = myConstClass.VISITED_BOX_COLOR;
-                    prevBoxes[idx].classList.add("grow-find");
-                    // prevBoxes[idx].classList.add("highlight");
+                    prevBoxes[middle].style.backgroundColor = myConstClass.NUMBER_FOUND_BOX_COLOR;
+                    prevBoxes[middle].classList.add("grow-find");
+                    prevBoxes[middle].classList.add("highlight");
 
-                }, idx * myConstClass.ANIMATION_SPEED_SECONDS * 1000);
+                    numberFoundAt = middle;
+                }, ( count + 1 ) * myConstClass.ANIMATION_SPEED_SECONDS * 1000);                
+                break;            
+            }         
+            else if ( this.state.array[middle] > userInput ) {
+                right = middle - 1;
             }
+            else {
+                left = middle + 1;
+            }
+
+            setTimeout(() => {             
+                this.resetAllTiles(prevBoxes);
+                this.hightlightWithinBounds(left, right, prevBoxes);
+            }, count * 1000 * myConstClass.ANIMATION_SPEED_SECONDS );
         }
 
-        this.setState( { buttonDisabled: false, numberFoundAt, message } );
+        setTimeout(() => {
+            this.setState({ buttonDisabled: false });
+        }, count * 1000 * myConstClass.ANIMATION_SPEED_SECONDS);
+
+    } //end of binarySearchOnClick() method
+
+    hightlightWithinBounds(start, end, arrayTiles) {
+        for (let i = start; i <= end; i++) {
+            arrayTiles[i].style.backgroundColor = myConstClass.NOT_FOUND_COLOR;
+            arrayTiles[i].style.transition = "100ms all";
+        }
+    }
+
+    resetAllTiles(arrayTiles) {
+        for (let i = 0; i < arrayTiles.length; i++) {
+            arrayTiles[i].style.backgroundColor = myConstClass.DEFAULT_BOX_COLOR;
+            arrayTiles[i].style.transition = "100ms all";
+        }
     }
 
     render() {
@@ -89,12 +121,12 @@ class LinearSearch extends Component {
         return (
             <div>
 
-                <Header title = "Linear Search" />
+                <Header title = "Binary Search" />
 
                  {/*Input bar */}
                  <input 
                     type="number" 
-                    id="userInput" 
+                    id="userInputBinary" 
                     // className="form-control" 
                     placeholder="Please enter number"
                 />
@@ -102,7 +134,7 @@ class LinearSearch extends Component {
                  {/*Search btn */}
                  <button
                     type="button"
-                    onClick={ () => this.linearSearchOnClick() }
+                    onClick={ () => this.binarySearchOnClick() }
                     className="btn-green"
                     id="search-button"
                     disabled={ buttonDisabled }
@@ -122,21 +154,9 @@ class LinearSearch extends Component {
                 </button>
 
                  {/* Final Boxes */}
-                 
-                {/* <div>
-                {
-                    array.map( (ele, idx) => (
-                        <div className= "outer-box">
-                            {ele}
-                            <span>{idx}</span>
-                        </div> 
-                    ))
-                }                            
-                </div> */}
-
                 <Boxes
                     array = {array}
-                    type = "LinearSearch"
+                    type = "BinarySearch"
                 />
 
             </div>
@@ -144,4 +164,4 @@ class LinearSearch extends Component {
     }
 }
 
-export default LinearSearch;
+export default BinarySearch;

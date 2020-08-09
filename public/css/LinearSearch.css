@@ -27,7 +27,7 @@
     display: inline-block;
 }
 
-.growFind {
+.grow-find {
     transition: ease-in 500ms;
 }
 
@@ -35,4 +35,14 @@
     transition: ease-in 300ms;
     transform: scale3d(1.25, 1.25, 1.25);
     margin: 24px;
+}
+
+.btn-green {
+    background-color: green;
+    color: white;
+}
+
+.btn-red {
+    background-color: red;
+    color: white;
 }
