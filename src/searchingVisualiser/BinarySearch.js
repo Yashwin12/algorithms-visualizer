@@ -57,12 +57,12 @@ class BinarySearch extends Component {
 
         this.setState( { buttonDisabled: true } );
 
-        this.binarySearchAnimations(0, this.state.array.length - 1, userInput, animations);
+        this.binarySearchAnimations(0, this.state.array.length - 1, parseInt(userInput), animations);
 
         while ( count < animations.length ){
 
             const [left, right, middle, numberFound] = animations[count];
-            console.table( left, right, middle, numberFound );
+            console.table( {left, right, middle, numberFound} );
             
             if( count == animations.length - 1 && numberFound == true ){
                 setTimeout(() => {
@@ -74,11 +74,11 @@ class BinarySearch extends Component {
                     prevBoxes[middle].classList.add("grow-find");
                     prevBoxes[middle].classList.add("highlight");
     
-                }, count * 1000 * myConstClass.BINARY_ANIMATION_SPEED_SECONDS );                 
+                }, ( count + 1 ) * 1000 * myConstClass.BINARY_ANIMATION_SPEED_SECONDS );                 
                 break;              
             }
 
-            else if ( ( middle == this.state.array.length - 1 || middle == 0 ) && numberFound == false ) {
+            else if ( count == animations.length - 1 && numberFound == false ) {
                 setTimeout(() => {
                     console.log("Number not found");
                     this.setState({
@@ -105,7 +105,7 @@ class BinarySearch extends Component {
     binarySearchAnimations( left, right, userInput, animations ){
 
         while ( left <= right ){
-            let middle = Math.round( left + (right - left)/2 ); // This is preferred over let middle = (left + right) / 2;
+            let middle = Math.floor( left + (right - left) /2 ); // This is preferred over let middle = (left + right) / 2;
 
             if( this.state.array[middle] == userInput ){                
                 animations.push( [left, right, middle, true] );               
