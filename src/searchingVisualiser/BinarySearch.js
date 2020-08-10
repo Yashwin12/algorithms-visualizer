@@ -51,55 +51,76 @@ class BinarySearch extends Component {
         if( !userInput )
             return;
 
-        let message = "Number not found";
-        
-        this.setState( { buttonDisabled: true } );
-        let numberFoundAt = null
-        
-        const prevBoxes = document.getElementsByClassName("outer-box");
-
-        let left = 0; 
-        let right = this.state.array.length - 1;
+        const prevBoxes = document.getElementsByClassName("outer-box");        
+        let animations = []; // Conists of left, right, mid and numberFound
         let count = 0;
 
-        this.hightlightWithinBounds(left, right, prevBoxes);
+        this.setState( { buttonDisabled: true } );
 
-        while ( left < right ){
-            let middle = Math.round( left + (right - left)/2 ); // This is preferred over let middle = (left + right) / 2;
-            // console.table( { left, right, middle} );
-            count++;
+        this.binarySearchAnimations(0, this.state.array.length - 1, userInput, animations);
 
-            if( this.state.array[middle] == userInput ){                
-                message = "Found number at " + middle;
+        while ( count < animations.length ){
+
+            const [left, right, middle, numberFound] = animations[count];
+            console.table( left, right, middle, numberFound );
+            
+            if( count == animations.length - 1 && numberFound == true ){
                 setTimeout(() => {
-                    this.resetAllTiles(prevBoxes);
+                    this.setState({ numberFoundAt: middle, message : "Number found at: " + middle });
 
+                    this.resetAllTiles(prevBoxes);
+                
                     prevBoxes[middle].style.backgroundColor = myConstClass.NUMBER_FOUND_BOX_COLOR;
                     prevBoxes[middle].classList.add("grow-find");
                     prevBoxes[middle].classList.add("highlight");
-
-                    numberFoundAt = middle;
-                }, ( count + 1 ) * myConstClass.BINARY_ANIMATION_SPEED_SECONDS * 1000);                
-                break;            
-            }         
-            else if ( this.state.array[middle] > userInput ) {
-                right = middle - 1;
-            }
-            else {
-                left = middle + 1;
+    
+                }, count * 1000 * myConstClass.BINARY_ANIMATION_SPEED_SECONDS );                 
+                break;              
             }
 
-            setTimeout(() => {             
+            else if ( ( middle == this.state.array.length - 1 || middle == 0 ) && numberFound == false ) {
+                setTimeout(() => {
+                    console.log("Number not found");
+                    this.setState({
+                        message: `Number not found`
+                    });
+                    this.resetAllTiles(prevBoxes);
+                }, (count + 1) * myConstClass.BINARY_ANIMATION_SPEED_SECONDS * 1000);
+            }
+
+            setTimeout(() => {
                 this.resetAllTiles(prevBoxes);
                 this.hightlightWithinBounds(left, right, prevBoxes);
-            }, count * 1000 * myConstClass.BINARY_ANIMATION_SPEED_SECONDS );
-        }
+            }, count * 1000 * myConstClass.BINARY_ANIMATION_SPEED_SECONDS);
+            count++;
+            
+        } // end of for loop
 
         setTimeout(() => {
             this.setState({ buttonDisabled: false });
         }, count * 1000 * myConstClass.BINARY_ANIMATION_SPEED_SECONDS);
 
     } //end of binarySearchOnClick() method
+
+    binarySearchAnimations( left, right, userInput, animations ){
+
+        while ( left <= right ){
+            let middle = Math.round( left + (right - left)/2 ); // This is preferred over let middle = (left + right) / 2;
+
+            if( this.state.array[middle] == userInput ){                
+                animations.push( [left, right, middle, true] );               
+                break;            
+            }         
+            else if ( this.state.array[middle] > userInput ) {
+                animations.push( [left, right, middle, false] );
+                right = middle - 1;
+            }
+            else {
+                animations.push( [left, right, middle, false]) ;
+                left = middle + 1;
+            }
+        }      
+    }
 
     hightlightWithinBounds(start, end, arrayTiles) {
         for (let i = start; i <= end; i++) {
