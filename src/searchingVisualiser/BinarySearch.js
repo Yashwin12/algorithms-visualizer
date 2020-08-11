@@ -67,7 +67,7 @@ class BinarySearch extends Component {
             
             if( count == animations.length - 1 && numberFound == true ){
                 setTimeout(() => {
-                    this.setState({ numberFoundAt: middle, message : "Number found at: " + middle });
+                    this.setState({ numberFoundAt: middle, message : "Number found at: " });
 
                     this.resetAllTiles(prevBoxes);
                 
@@ -76,7 +76,7 @@ class BinarySearch extends Component {
                     prevBoxes[middle].classList.add("highlight");
     
                 }, ( count + 1 ) * 1000 * myConstClass.BINARY_ANIMATION_SPEED_SECONDS );                 
-                break;              
+                
             }
 
             else if ( count == animations.length - 1 && numberFound == false ) {
@@ -199,10 +199,13 @@ class BinarySearch extends Component {
                 
                 { numberFoundAt != null ? 
                     (
-                        <p className="number-found-msg">{message}</p>
+                        <div> 
+                            <label className="number-found-msg font-weight-bold">{message}</label>
+                            <label className = "font-weight-bold"> {numberFoundAt} </label>
+                        </div>                        
                     ) :
                     (
-                        <p className="number-not-found-msg">{message}</p>
+                        <label className="number-not-found-msg font-weight-bold">{message}</label>
                     ) 
                 }
         
