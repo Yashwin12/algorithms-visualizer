@@ -56,16 +56,15 @@ class LinearSearch extends Component {
 
         for( let idx = 0; idx < this.state.array.length; idx++ ) {
             
-            if( this.state.array[idx] == userInput ){
+            if( this.state.array[idx] ===  parseInt(userInput) ){
                 
-                message = "Found number at " + idx;
+                message = "Found number at: " ;
+                numberFoundAt = idx;
 
                 setTimeout(() => {
                     prevBoxes[idx].style.backgroundColor = myConstClass.NUMBER_FOUND_BOX_COLOR;
                     prevBoxes[idx].classList.add("grow-find");
                     prevBoxes[idx].classList.add("highlight");
-
-                    numberFoundAt = idx;
                 }, idx * myConstClass.LINEAR_ANIMATION_SPEED_SECONDS * 1000);
                 
                 break;                
@@ -83,57 +82,83 @@ class LinearSearch extends Component {
         this.setState( { buttonDisabled: false, numberFoundAt, message } );
     }
 
+    resetCurrentViewAndNotArray() {        
+        document.getElementById("userInput").value = "";
+        this.setState({ message : "", numberFoundAt: null });
+
+        const prevBoxes = document.getElementsByClassName("outer-box"); 
+    
+        for ( let i = 0; i < prevBoxes.length; i++ ){
+            prevBoxes[i].style.backgroundColor = myConstClass.DEFAULT_BOX_COLOR;
+            prevBoxes[i].classList.remove("highlight");
+        }        
+    }
+
     render() {
-        const { buttonDisabled, array } = this.state;
+        const { buttonDisabled, array, numberFoundAt, message } = this.state;
 
         return (
             <div>
-
                 <Header title = "Linear Search" />
 
-                 {/*Input bar */}
-                 <input 
-                    type="number" 
-                    id="userInput" 
-                    className="form-control" 
-                    placeholder="Please enter number"
-                />
+                <div className="input-group col-xl-11 container justify-content-center">
 
-                 {/*Search btn */}
-                 <button
-                    type="button"
-                    onClick={ () => this.linearSearchOnClick() }
-                    className="btn-green"
-                    id="search-button"
-                    disabled={ buttonDisabled }
-                >
-                    Search
-                </button>
-                                 
-                 {/* Reset Array */}
-                <button
-                    type="button"
-                    onClick={ () => this.resetArray() }
-                    className="btn btn-red"
-                    id="reset-button"
-                    disabled={ buttonDisabled }
-                >
-                    Reset Array
-                </button>
+                    {/*Input bar */}
+                    <input 
+                        type="number" 
+                        id="userInput" 
+                        className="form-control col-xl-3" 
+                        placeholder="Please enter number"
+                    />
 
-                 {/* Final Boxes */}
-                 
-                {/* <div>
-                {
-                    array.map( (ele, idx) => (
-                        <div className= "outer-box">
-                            {ele}
-                            <span>{idx}</span>
-                        </div> 
-                    ))
-                }                            
-                </div> */}
+                    {/*Search btn */}
+                    <button
+                        type="button"
+                        onClick={ () => this.linearSearchOnClick() }
+                        className="btn btn-success col-xl-1"
+                        id="search-button"
+                        disabled={ buttonDisabled }
+                    >
+                        Search
+                    </button>
 
+                    {/* Reset button */}
+                    <button
+                        onClick={ () => this.resetCurrentViewAndNotArray() }
+                        className="btn btn-dark col-xl-1"
+                        type="button"
+                        id="binarySearchReset"
+                        disabled={ buttonDisabled }
+                    > 
+                        Reset
+                    </button>
+                                    
+                    {/* Reset Array */}
+                    <button
+                        type="button"
+                        onClick={ () => this.resetArray() }
+                        className="btn btn-danger col-xl-1"
+                        id="reset-button"
+                        disabled={ buttonDisabled }
+                    >
+                        Reset Array
+                    </button>
+                
+                </div>            
+
+                {/* { numberFoundAt != null ? 
+                    (
+                        <div> 
+                            <label className="number-found-msg font-weight-bold">{message}</label>
+                            <label className = "font-weight-bold"> {numberFoundAt} </label>
+                        </div>                        
+                    ) :
+                    (
+                        <label className="number-not-found-msg font-weight-bold">{message}</label>
+                    ) 
+                }     */}
+
+                 {/* Final Boxes */}                                
                 <Boxes
                     array = {array}
                     type = "LinearSearch"

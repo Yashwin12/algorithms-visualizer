@@ -65,7 +65,7 @@ class BinarySearch extends Component {
             const [left, right, middle, numberFound] = animations[count];
             console.table( {left, right, middle, numberFound} );
             
-            if( count == animations.length - 1 && numberFound == true ){
+            if( count === animations.length - 1 && numberFound ===true ){
                 setTimeout(() => {
                     this.setState({ numberFoundAt: middle, message : "Number found at: " });
 
@@ -79,7 +79,7 @@ class BinarySearch extends Component {
                 
             }
 
-            else if ( count == animations.length - 1 && numberFound == false ) {
+            else if ( count === animations.length - 1 && numberFound === false ) {
                 setTimeout(() => {
                     console.log("Number not found");
                     this.setState({
@@ -108,7 +108,7 @@ class BinarySearch extends Component {
         while ( left <= right ){
             let middle = Math.floor( left + (right - left) /2 ); // This is preferred over let middle = (left + right) / 2;
 
-            if( this.state.array[middle] == userInput ){                
+            if( this.state.array[middle] === userInput ){                
                 animations.push( [left, right, middle, true] );               
                 break;            
             }         
@@ -138,7 +138,7 @@ class BinarySearch extends Component {
         }
     }
 
-    resetCurrentArray() {        
+    resetCurrentViewAndNotArray() {        
         document.getElementById("userInputBinary").value = "";
         this.setState({ message : "", numberFoundAt: null });
         this.resetAllTiles( document.getElementsByClassName("outer-box") );
@@ -175,7 +175,7 @@ class BinarySearch extends Component {
 
                     {/* Reset button */}
                     <button
-                        onClick={ () => this.resetCurrentArray() }
+                        onClick={ () => this.resetCurrentViewAndNotArray() }
                         className="btn btn-dark col-xl-1"
                         type="button"
                         id="binarySearchReset"
