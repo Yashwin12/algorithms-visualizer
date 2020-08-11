@@ -95,7 +95,7 @@ class LinearSearch extends Component {
                  <input 
                     type="number" 
                     id="userInput" 
-                    // className="form-control" 
+                    className="form-control" 
                     placeholder="Please enter number"
                 />
 

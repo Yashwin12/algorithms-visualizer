@@ -28,6 +28,7 @@ class BinarySearch extends Component {
         for ( let i = 0; i < prevBoxes.length; i++ ){
             prevBoxes[i].style.backgroundColor = myConstClass.DEFAULT_BOX_COLOR;
             prevBoxes[i].classList.remove("highlight");
+            prevBoxes[i].classList.remove("growFind");
         }
 
         for ( let i = 0; i < myConstClass.TOTAL_ARRAY_SIZE; i++ ){                        
@@ -132,48 +133,79 @@ class BinarySearch extends Component {
     resetAllTiles(arrayTiles) {
         for (let i = 0; i < arrayTiles.length; i++) {
             arrayTiles[i].style.backgroundColor = myConstClass.DEFAULT_BOX_COLOR;
+            arrayTiles[i].classList.remove("highlight");
             arrayTiles[i].style.transition = "100ms all";
         }
     }
 
+    resetCurrentArray() {        
+        document.getElementById("userInputBinary").value = "";
+        this.setState({ message : "", numberFoundAt: null });
+        this.resetAllTiles( document.getElementsByClassName("outer-box") );
+    }
+
     render() {
-        const { buttonDisabled, array } = this.state;
+        const { buttonDisabled, array, numberFoundAt, message } = this.state;
 
         return (
             <div>
 
                 <Header title = "Binary Search" />
+                 
+                <div className="input-group col-xl-11 container justify-content-center">
 
-                 {/*Input bar */}
-                 <input 
-                    type="number" 
-                    id="userInputBinary" 
-                    // className="form-control" 
-                    placeholder="Please enter number"
-                />
+                    {/*Input bar */}
+                    <input 
+                        type="number" 
+                        id="userInputBinary" 
+                        className="form-control col-xl-3" 
+                        placeholder="Please enter number"
+                    />      
 
-                 {/*Search btn */}
-                 <button
-                    type="button"
-                    onClick={ () => this.binarySearchOnClick() }
-                    className="btn-green"
-                    id="search-button"
-                    disabled={ buttonDisabled }
-                >
-                    Search
-                </button>
-                                 
-                 {/* Reset Array */}
-                <button
-                    type="button"
-                    onClick={ () => this.resetArray() }
-                    className="btn btn-red"
-                    id="reset-button"
-                    disabled={ buttonDisabled }
-                >
-                    Reset Array
-                </button>
+                     {/*Search btn */}
+                    <button
+                        type="button"
+                        onClick={ () => this.binarySearchOnClick() }
+                        className="btn btn-success col-xl-1"
+                        id="search-button"
+                        disabled={ buttonDisabled }
+                    >
+                        Search
+                    </button>           
 
+                    {/* Reset button */}
+                    <button
+                        onClick={ () => this.resetCurrentArray() }
+                        className="btn btn-dark col-xl-1"
+                        type="button"
+                        id="binarySearchReset"
+                        disabled={ buttonDisabled }
+                    > 
+                        Reset
+                    </button>
+                                                       
+                    {/* Reset Array */}
+                    <button
+                        type="button"
+                        onClick={ () => this.resetArray() }
+                        className="btn btn-danger col-xl-1"
+                        id="reset-button"
+                        disabled={ buttonDisabled }
+                    >
+                        Reset Array
+                    </button>
+
+                </div>                
+                
+                { numberFoundAt != null ? 
+                    (
+                        <p className="number-found-msg">{message}</p>
+                    ) :
+                    (
+                        <p className="number-not-found-msg">{message}</p>
+                    ) 
+                }
+        
                  {/* Final Boxes */}
                 <Boxes
                     array = {array}

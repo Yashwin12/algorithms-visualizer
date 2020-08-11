@@ -6,7 +6,7 @@ export const NOT_FOUND_COLOR = "#F16388";
 export const BINARY_ANIMATION_SPEED_SECONDS = 3;
 export const LINEAR_ANIMATION_SPEED_SECONDS = 0.2;
 
-export const TOTAL_ARRAY_SIZE = 10;
+export const TOTAL_ARRAY_SIZE = 15;
 
 export const STARTING_ARRAY_RANGE = 5;
 export const ENDING_ARRAY_RANGE = 999;

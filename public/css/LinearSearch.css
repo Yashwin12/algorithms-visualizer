@@ -12,18 +12,20 @@
     color: darkblue;
     text-align: center;
     height: 75px;
-    width: 75px;
-    padding-top: 15px;    
-    margin: 10px;
+    width: 60px;
+    padding: 10px;    
+    margin: 5px;
     display: inline-block;
+    border-radius: 3px;
 }
 .outer-box span {
     background-color: aquamarine;
     color: darkblue;
     text-align: center;
-    width: 35px;
-    padding: 5px;
-    margin: 10px;
+    width: 30px;
+    padding: 3px;
+    margin-top: 10px;
+    border-radius: 3px;
     display: inline-block;
 }
 
@@ -37,12 +39,16 @@
     margin: 24px;
 }
 
-.btn-green {
-    background-color: green;
-    color: white;
+.number-not-found-msg {    
+    padding: 5px;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #b61717;    
 }
 
-.btn-red {
-    background-color: red;
-    color: white;
+.number-found-msg {    
+    padding: 5px;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #137c41;    
 }
