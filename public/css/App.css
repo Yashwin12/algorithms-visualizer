@@ -1,3 +1,67 @@
 .App {
   text-align: center;
 }
+
+@keyframes growFind {
+  0% {
+      transform: scale3d(1, 1, 1);
+  }
+  100% {
+      transform: scale3d(1.1, 1.1, 1.1);
+  }
+}
+
+.outer-box {
+  background-color: yellow;
+  color: darkblue;
+  text-align: center;
+  height: 75px;
+  width: 60px;
+  padding: 10px;    
+  margin: 5px;
+  display: inline-block;
+  border-radius: 3px;
+}
+.outer-box span {
+  background-color: aquamarine;
+  color: darkblue;
+  text-align: center;
+  width: 30px;
+  padding: 3px;
+  margin-top: 10px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.grow-find {
+  transition: ease-in 500ms;
+}
+
+.highlight {
+  transition: ease-in 300ms;
+  transform: scale3d(1.25, 1.25, 1.25);
+  margin: 24px;
+}
+
+.number-not-found-msg {    
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 20px;
+  color: #b61717;    
+}
+
+.number-found-msg {    
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 20px;
+  color: #137c41;    
+}
+
+h1{
+  padding-top: 20px;
+
+}
+
+table td {
+  border-top: none !important;
+}
