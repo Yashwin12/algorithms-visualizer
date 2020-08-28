@@ -11,3 +11,6 @@ export const TOTAL_ARRAY_SIZE = 20;
 export const STARTING_ARRAY_RANGE = 5;
 export const ENDING_ARRAY_RANGE = 999;
 
+
+export const DISTANCE_BETWEEN_NODES = 80;
+
