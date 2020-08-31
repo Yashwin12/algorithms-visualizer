@@ -65,33 +65,3 @@ h1{
 table td {
   border-top: none !important;
 }
-
-.circle {
-  height: 45px;
-  width: 45px;
-  /* background-color: #bbb; */
-  border-radius: 100%;
-  display: inline-block;
-  line-height: 45px;
-  text-align: center;
-  border: 2px solid black;
-}
-
-.background {
-  background-color: #BCBCBC;
-  width: 100px;
-  height: 50px;
-  padding: 0; 
-  margin: 0
-}
-.line1 {
-  width: 112px;
-  height: 47px;
-  border-bottom: 1px solid red;
-  -webkit-transform:
-      translateY(-20px)
-      translateX(5px)
-      rotate(27deg); 
-  position: absolute;
-  /* top: -20px; */
-}

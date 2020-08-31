@@ -15,7 +15,7 @@ class BinarySearchTree extends Component {
   addNode(){ 
     let userInput = parseInt( document.getElementById("userInput").value );    
 
-    if( !userInput )
+    if( !userInput && userInput != 0 )
         return;
 
     let tree = this.state.tree;
@@ -28,7 +28,6 @@ class BinarySearchTree extends Component {
         // There is at least one node present, so we can directly call insert method of BST.        
         tree.insert(userInput);
     }
-
 
     this.setState( { tree } );
   }
@@ -96,13 +95,13 @@ class BinarySearchTree extends Component {
         {
           tree != null ? 
           (                
-              <Node className="number-found-msg font-weight-bold" tree = {tree}/>                                    
+            <Node className="number-found-msg font-weight-bold" tree = {tree} />
           ) :
           (
               <label className="number-not-found-msg font-weight-bold">Please enter an element</label>
           ) 
         }        
-
+        
       </div>
     );
   }
@@ -133,7 +132,7 @@ class BST {
 
                     if( currentNode.parentXAxis == null || currentNode.parentYAxis == null ){
                       // This would be second level node
-                      currentNode.left = new BST(value, this.xAxis - myConstClass.DISTANCE_BETWEEN_NODES, this.yAxis + myConstClass.DISTANCE_BETWEEN_NODES, this.xAxis, this.yAxis );
+                      currentNode.left = new BST(value, this.xAxis - myConstClass.SECOND_LEVEL_NODE_X_AXIS, this.yAxis + myConstClass.SECOND_LEVEL_NODE_Y_AXIS, this.xAxis, this.yAxis );
                     }
                     else{
                       currentNode.left = new BST(value, currentNode.xAxis - myConstClass.DISTANCE_BETWEEN_NODES, currentNode.yAxis + myConstClass.DISTANCE_BETWEEN_NODES, currentNode.xAxis, currentNode.yAxis );
@@ -151,7 +150,7 @@ class BST {
 
                     if( currentNode.parentXAxis == null || currentNode.parentYAxis == null ){
                       // This would be second level node
-                      currentNode.right = new BST(value, this.xAxis + myConstClass.DISTANCE_BETWEEN_NODES, this.yAxis + myConstClass.DISTANCE_BETWEEN_NODES, this.xAxis, this.yAxis );
+                      currentNode.right = new BST(value, this.xAxis + myConstClass.SECOND_LEVEL_NODE_X_AXIS, this.yAxis + myConstClass.SECOND_LEVEL_NODE_Y_AXIS, this.xAxis, this.yAxis );
                     }
                     else{
                       currentNode.right = new BST(value, currentNode.xAxis + myConstClass.DISTANCE_BETWEEN_NODES, currentNode.yAxis + myConstClass.DISTANCE_BETWEEN_NODES, currentNode.xAxis, currentNode.yAxis );
