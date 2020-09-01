@@ -1,9 +1,6 @@
 import React, { Component, useRef } from "react";
 import shallowCompare from 'react-addons-shallow-compare'; // ES6
 
-
-import * as myConstClass from "../commonUtils/Constants";
-
 class Node extends React.Component {
     constructor(props) {
         super(props);
@@ -29,61 +26,88 @@ class Node extends React.Component {
 
     preOrderHelperMethod ( tree ){
 
-        this.drawCircle( tree.xAxis, tree.yAxis, tree.value );
+        this.drawCircle( tree.xAxis, tree.yAxis, tree.value, "white", "black", "black" );
 
         if( tree.left != null ){
-            this.drawLine( tree.left.xAxis, tree.left.yAxis, tree.left.parentXAxis, tree.left.parentYAxis );
+            this.drawLine( tree.left.xAxis, tree.left.yAxis, tree.left.parentXAxis, tree.left.parentYAxis, "black");
             this.preOrderHelperMethod ( tree.left );  
         }  
         
         if( tree.right != null ){
-            this.drawLine( tree.right.xAxis, tree.right.yAxis, tree.right.parentXAxis, tree.right.parentYAxis );
+            this.drawLine( tree.right.xAxis, tree.right.yAxis, tree.right.parentXAxis, tree.right.parentYAxis, "black");
             this.preOrderHelperMethod ( tree.right );  
         }   
     }
 
-    drawCircle( xAxis, yAxis, value ){
+    drawCircle( xAxis, yAxis, value, circleBackgroundColor, circleBorder, fontColor ){
         
         var context = this.state.context;
 
         context.beginPath();
-        context.lineWidth = 5;
+        context.lineWidth = 1;
 
         // arc( x, y, circle's radius, startingAngle, endingAngle, counterClockWise )
         context.arc( xAxis, yAxis, 20, 0, 2 * Math.PI, true);  
 
-        context.fillStyle = "white";
-        context.fill();
+        context.fillStyle = circleBackgroundColor;
+        context.fill();       
+        context.strokeStyle = circleBorder;
         context.stroke();
 
         // ******************* This is for the text inside the circle ****************************
         context.beginPath()
         context.font = "15px Arial"
-        context.fillStyle = "black";
+        context.fillStyle = fontColor;
         context.fill();
         context.textAlign = "center";
         context.fillText(value, xAxis, yAxis + 5)
         context.stroke();
     }
 
-    drawLine( xAxis, yAxis, parentXAxis, parentYAxis ){
+    drawLine( xAxis, yAxis, parentXAxis, parentYAxis, lineColor ){
 
-        console.table( {xAxis,yAxis,parentXAxis, parentYAxis} );
-
-        var context = this.state.context;
-
+        var context = this.state.context;   
         // Reset the current path
         context.beginPath(); 
         // Staring point (x1,y1)
-        context.moveTo(xAxis,yAxis - 20 );
+        context.moveTo(parentXAxis - 5, parentYAxis + 20);        
         // End point (x2,y2)
-        context.lineTo(parentXAxis - 5, parentYAxis + 20);
+        context.lineTo(xAxis,yAxis - 20 );
+        // Line color       
+        context.strokeStyle = lineColor;
         // Make the line visible
         context.stroke();        
     }
 
+    visualizeSearchNumber( tree, searchNumber ){
+        
+        this.drawCircle( tree.xAxis, tree.yAxis, tree.value, "orange", "orange", "white");
+
+        if ( tree.value == searchNumber ){
+            setTimeout(() => {
+                this.drawCircle( tree.xAxis, tree.yAxis, tree.value, "green", "black", "white" );          
+            }, 1500 );            
+        }        
+        else if ( tree.value > searchNumber && tree.left != null ){
+            // Go left 
+
+            setTimeout(() => {                
+                this.drawLine( tree.left.xAxis, tree.left.yAxis, tree.left.parentXAxis, tree.left.parentYAxis, "orange");                         
+                return this.visualizeSearchNumber( tree.left, searchNumber );
+            }, 1500 );               
+        }
+        else if( tree.value < searchNumber && tree.right != null ) {
+            // Go right            
+            
+            setTimeout(() => {              
+                this.drawLine( tree.right.xAxis, tree.right.yAxis, tree.right.parentXAxis, tree.right.parentYAxis, "orange");           
+                return this.visualizeSearchNumber( tree.right, searchNumber );
+            }, 1500 );        
+        }
+    }
+
     render() {
-        let { tree } = this.props;
+        let { tree, searchNumber } = this.props;
 
         if( tree == null )
             return;
@@ -92,6 +116,7 @@ class Node extends React.Component {
             <span>                                                              
                 <canvas ref = {this.canvasRef} width={window.screen.width} height={window.screen.height} />
                 { this.state.context != null && this.visualizeTree(tree) }  
+                { searchNumber != null && this.visualizeSearchNumber( tree, searchNumber ) }  
             </span>
         );
     }

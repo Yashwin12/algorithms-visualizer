@@ -8,7 +8,8 @@ class BinarySearchTree extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        tree : null       // Consists of value, left, right, xAxis, yAxis, parentXAxis, parentYAxis properties
+        tree : null,       // Consists of value, left, right, xAxis, yAxis, parentXAxis, parentYAxis properties
+        searchNumber: null
     };
   }
 
@@ -39,10 +40,17 @@ class BinarySearchTree extends Component {
 
   searchNodeInTree() {
     // TODO: Implement me
+
+    let searchNumber = parseInt( document.getElementById("userInput").value );  
+
+    if( !searchNumber && searchNumber != 0 )
+      return;
+
+      this.setState({ searchNumber });
   }
 
   render() {
-      let { tree } = this.state;
+      let { tree, searchNumber } = this.state;
     return (
       <div>
         <Header title="Binary Search Tree" />
@@ -95,10 +103,10 @@ class BinarySearchTree extends Component {
         {
           tree != null ? 
           (                
-            <Node className="number-found-msg font-weight-bold" tree = {tree} />
+            <Node className="number-found-msg font-weight-bold" tree = {tree} searchNumber = {searchNumber} />
           ) :
           (
-              <label className="number-not-found-msg font-weight-bold">Please enter an element</label>
+            <label className="number-not-found-msg font-weight-bold">Please enter an element</label>
           ) 
         }        
         
@@ -126,10 +134,7 @@ class BST {
                 // Go to the left side of tree
 
                 if( currentNode.left == null ){
-                    // 1. Draw a slant line from the parent node on left side.
-
-                    // 2. Add an actual node to the currentNode.
-
+                   
                     if( currentNode.parentXAxis == null || currentNode.parentYAxis == null ){
                       // This would be second level node
                       currentNode.left = new BST(value, this.xAxis - myConstClass.SECOND_LEVEL_NODE_X_AXIS, this.yAxis + myConstClass.SECOND_LEVEL_NODE_Y_AXIS, this.xAxis, this.yAxis );
@@ -138,8 +143,6 @@ class BST {
                       currentNode.left = new BST(value, currentNode.xAxis - myConstClass.DISTANCE_BETWEEN_NODES, currentNode.yAxis + myConstClass.DISTANCE_BETWEEN_NODES, currentNode.xAxis, currentNode.yAxis );
                     }
                     
-                    // 3. Draw circle and display value in the circle. 
-
                     break;
                 }
                 currentNode = currentNode.left;
