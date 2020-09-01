@@ -8,29 +8,35 @@ class LandingPage extends Component {
   }
 
   render() {
+
     return (
       <div>
         <h1> Happy Visualization! </h1>
-        <br/>
+        <br />
         <table className="table table-striped">
-          <thead className = "thead-dark">
+          <thead className="thead-dark">
             <tr>
               <th scope="col">#</th>
               <th scope="col">Algorithm Visualiser</th>
               <th scope="col">Algorithm Type</th>
               <th scope="col">Average Time Complexity</th>
               <th scope="col">Average Space Complexity</th>
-              <th scope = "col">External Reference</th>
+              <th scope="col">External Reference</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td scope="row">1</td>
-              <NavLink to="/linear-search">Linear Search</NavLink>              
+              <NavLink to="/linear-search">Linear Search</NavLink>
               <td>Searching</td>
               <td>O(n)</td>
               <td>O(1)</td>
-              <a target="_blank" href= "https://www.tutorialspoint.com/data_structures_algorithms/linear_search_algorithm.htm">Linear Search</a>
+              <a
+                target="_blank"
+                href="https://www.tutorialspoint.com/data_structures_algorithms/linear_search_algorithm.htm"
+              >
+                Linear Search
+              </a>
             </tr>
 
             <tr>
@@ -39,8 +45,27 @@ class LandingPage extends Component {
               <td>Searching</td>
               <td>O(n)</td>
               <td>O(log(n))</td>
-              <a target="_blank" href= "https://www.tutorialspoint.com/data_structures_algorithms/binary_search_algorithm.htm">Binary Search</a>
-            </tr>            
+              <a
+                target="_blank"
+                href="https://www.tutorialspoint.com/data_structures_algorithms/binary_search_algorithm.htm"
+              >
+                Binary Search
+              </a>
+            </tr>
+
+            <tr>
+              <td scope="row">3</td>
+              <NavLink to="/binary-search-tree">Binary Search Tree</NavLink>
+              <td>Searching</td>
+              <td>O(log(n))</td>
+              <td>O(n)</td>
+              <a
+                target="_blank"
+                href="https://www.tutorialspoint.com/data_structures_algorithms/binary_search_tree.htm"
+              >
+                Binary Search Tree
+              </a>
+            </tr>
           </tbody>
         </table>
       </div>

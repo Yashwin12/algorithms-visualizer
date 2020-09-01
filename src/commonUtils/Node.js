@@ -11,11 +11,6 @@ class Node extends React.Component {
         this.canvasRef = React.createRef();      
     }
 
-    // TODO_YASH: Implement this properly.
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     return shallowCompare(nextProps.tree, this.props.tree);
-    // }
-
     componentDidMount() {        
         this.setState( { context: this.canvasRef.current.getContext('2d') } ) // We would be setting the context once in the state and then refer it elsewhere.  
     }
@@ -44,7 +39,7 @@ class Node extends React.Component {
         var context = this.state.context;
 
         context.beginPath();
-        context.lineWidth = 1;
+        context.lineWidth = 5;
 
         // arc( x, y, circle's radius, startingAngle, endingAngle, counterClockWise )
         context.arc( xAxis, yAxis, 20, 0, 2 * Math.PI, true);  
@@ -81,7 +76,12 @@ class Node extends React.Component {
 
     visualizeSearchNumber( tree, searchNumber ){
         
-        this.drawCircle( tree.xAxis, tree.yAxis, tree.value, "orange", "orange", "white");
+        this.drawCircle( tree.xAxis, tree.yAxis, tree.value, "red", "red", "white");
+        
+        // This is for the circle animation...
+        setTimeout(() => {
+            this.drawCircle( tree.xAxis, tree.yAxis, tree.value, "white", "red", "red" );          
+        }, 500 );     
 
         if ( tree.value == searchNumber ){
             setTimeout(() => {
@@ -92,7 +92,7 @@ class Node extends React.Component {
             // Go left 
 
             setTimeout(() => {                
-                this.drawLine( tree.left.xAxis, tree.left.yAxis, tree.left.parentXAxis, tree.left.parentYAxis, "orange");                         
+                this.drawLine( tree.left.xAxis, tree.left.yAxis, tree.left.parentXAxis, tree.left.parentYAxis, "red");                         
                 return this.visualizeSearchNumber( tree.left, searchNumber );
             }, 1500 );               
         }
@@ -100,7 +100,7 @@ class Node extends React.Component {
             // Go right            
             
             setTimeout(() => {              
-                this.drawLine( tree.right.xAxis, tree.right.yAxis, tree.right.parentXAxis, tree.right.parentYAxis, "orange");           
+                this.drawLine( tree.right.xAxis, tree.right.yAxis, tree.right.parentXAxis, tree.right.parentYAxis, "red");           
                 return this.visualizeSearchNumber( tree.right, searchNumber );
             }, 1500 );        
         }

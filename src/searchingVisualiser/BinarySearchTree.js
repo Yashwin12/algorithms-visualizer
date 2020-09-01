@@ -39,7 +39,6 @@ class BinarySearchTree extends Component {
   }
 
   searchNodeInTree() {
-    // TODO: Implement me
 
     let searchNumber = parseInt( document.getElementById("userInput").value );  
 
