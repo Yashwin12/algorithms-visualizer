@@ -22,5 +22,5 @@ This repository implements following algorithms:
 -   Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 -   Enjoy the visualiser!
 
-### `Contributions.`
+### `Contributions`
 Please feel free to fork, improve, make pull requests or fill issues. I'll be glad to fix bugs you encountered.
